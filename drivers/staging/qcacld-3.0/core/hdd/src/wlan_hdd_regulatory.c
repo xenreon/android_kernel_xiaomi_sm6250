@@ -778,7 +778,7 @@ int hdd_reg_set_band(struct net_device *dev, u8 ui_band)
 
 	hdd_debug("change band to %u", band);
 
-	if (ucfg_reg_get_curr_band(hdd_ctx->pdev, &current_band) !=
+	if (ucfg_reg_get_band(hdd_ctx->pdev, &current_band) !=
 	    QDF_STATUS_SUCCESS) {
 		hdd_debug("Failed to get current band config");
 		return -EIO;

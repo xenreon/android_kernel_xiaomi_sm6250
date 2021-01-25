@@ -887,7 +887,7 @@ void hdd_config_tdls_with_band_switch(struct hdd_context *hdd_ctx)
 		return;
 	}
 
-	if (ucfg_reg_get_curr_band(hdd_ctx->pdev, &current_band) !=
+	if (ucfg_reg_get_band(hdd_ctx->pdev, &current_band) !=
 	    QDF_STATUS_SUCCESS) {
 		hdd_err("Failed to get current band config");
 		return;
