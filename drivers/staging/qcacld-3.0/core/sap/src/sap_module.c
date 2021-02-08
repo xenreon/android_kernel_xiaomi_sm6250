@@ -2994,7 +2994,7 @@ qdf_freq_t wlansap_get_chan_band_restrict(struct sap_context *sap_ctx)
 		return 0;
 	}
 
-	if (ucfg_reg_get_band(mac->pdev, &band) != QDF_STATUS_SUCCESS) {
+	if (ucfg_reg_get_curr_band(mac->pdev, &band) != QDF_STATUS_SUCCESS) {
 		sap_err("Failed to get current band config");
 		return 0;
 	}
