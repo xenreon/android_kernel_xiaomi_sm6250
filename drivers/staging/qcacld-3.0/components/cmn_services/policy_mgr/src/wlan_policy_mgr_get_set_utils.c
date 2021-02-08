@@ -35,7 +35,6 @@
 #include "wlan_nan_api.h"
 #include "nan_public_structs.h"
 #include "wlan_reg_services_api.h"
-#include "wlan_mlme_vdev_mgr_interface.h"
 
 /* invalid channel id. */
 #define INVALID_CHANNEL_ID 0
@@ -2163,19 +2162,14 @@ static bool policy_mgr_is_sub_20_mhz_enabled(struct wlan_objmgr_psoc *psoc)
 static bool policy_mgr_check_privacy_for_new_conn(
 	struct policy_mgr_psoc_priv_obj *pm_ctx)
 {
-	struct wlan_objmgr_pdev *pdev = pm_ctx->pdev;
-
-	if (!pdev) {
-		policy_mgr_debug("pdev is Null");
+	if (!pm_ctx->hdd_cbacks.hdd_wapi_security_sta_exist)
 		return true;
-	}
 
-	if (mlme_is_wapi_sta_active(pdev) &&
-	    policy_mgr_get_connection_count(pm_ctx->psoc) > 0)
+	if (pm_ctx->hdd_cbacks.hdd_wapi_security_sta_exist() &&
+	    (policy_mgr_get_connection_count(pm_ctx->psoc) > 0))
 		return false;
 
 	return true;
-
 }
 
 #ifdef FEATURE_FOURTH_CONNECTION

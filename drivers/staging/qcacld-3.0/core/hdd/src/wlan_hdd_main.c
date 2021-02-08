@@ -2165,7 +2165,7 @@ int hdd_update_tgt_cfg(hdd_handle_t hdd_handle, struct wma_tgt_cfg *cfg)
 {
 	int ret;
 	struct hdd_context *hdd_ctx = hdd_handle_to_context(hdd_handle);
-	uint32_t temp_band_cap, band_capability;
+	uint8_t temp_band_cap, band_capability;
 	struct cds_config_info *cds_cfg = cds_get_ini_config();
 	uint8_t antenna_mode;
 	uint8_t sub_20_chan_width;
@@ -3204,6 +3204,8 @@ static void hdd_register_policy_manager_callback(
 	hdd_cbacks.get_mode_for_non_connected_vdev =
 		wlan_hdd_get_mode_for_non_connected_vdev;
 	hdd_cbacks.hdd_get_device_mode = hdd_get_device_mode;
+	hdd_cbacks.hdd_wapi_security_sta_exist =
+		hdd_wapi_security_sta_exist;
 	hdd_cbacks.hdd_is_chan_switch_in_progress =
 				hdd_is_chan_switch_in_progress;
 	hdd_cbacks.hdd_is_cac_in_progress =
@@ -11591,7 +11593,7 @@ static int hdd_update_cds_config(struct hdd_context *hdd_ctx)
 {
 	struct cds_config_info *cds_cfg;
 	int value;
-	uint32_t band_capability;
+	uint8_t band_capability;
 	uint8_t ito_repeat_count;
 	bool crash_inject;
 	bool self_recovery;
@@ -11686,11 +11688,10 @@ static int hdd_update_user_config(struct hdd_context *hdd_ctx)
 {
 	struct wlan_objmgr_psoc_user_config *user_config;
 	uint8_t band_capability;
-	uint32_t band_bitmap;
 	QDF_STATUS status;
 	bool value = false;
 
-	status = ucfg_mlme_get_band_capability(hdd_ctx->psoc, &band_bitmap);
+	status = ucfg_mlme_get_band_capability(hdd_ctx->psoc, &band_capability);
 	if (QDF_IS_STATUS_ERROR(status))
 		return -EIO;
 

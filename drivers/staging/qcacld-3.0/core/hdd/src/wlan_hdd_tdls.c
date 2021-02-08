@@ -879,7 +879,7 @@ void hdd_config_tdls_with_band_switch(struct hdd_context *hdd_ctx)
 {
 	struct wlan_objmgr_vdev *tdls_obj_vdev;
 	int offchmode;
-	uint32_t current_band;
+	enum band_info current_band;
 	bool tdls_off_ch;
 
 	if (!hdd_ctx) {
@@ -902,8 +902,7 @@ void hdd_config_tdls_with_band_switch(struct hdd_context *hdd_ctx)
 	 * If 2g or 5g is not supported. Disable tdls off channel only when
 	 * tdls off channel is enabled currently.
 	 */
-	if ((current_band & BIT(REG_BAND_2G)) &&
-	    (current_band & BIT(REG_BAND_5G))) {
+	if (current_band == BAND_ALL) {
 		if (cfg_tdls_get_off_channel_enable_orig(
 			hdd_ctx->psoc, &tdls_off_ch) !=
 		    QDF_STATUS_SUCCESS) {
